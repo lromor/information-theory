@@ -125,7 +125,16 @@ We have seen a relation between relative entropy and cross
 \end{subproblem}
 
 \begin{solution}
-...
+
+  By the previous exercise we know that $I(X;Y) = D(P_{XY} || P_{x}P_{Y})$.
+  From the previous quiz, we also know that $H_{c}(P, Q) = H(P) + D(P||Q)$.
+  If we use the previous equalities rearrange the equations we get:
+  \begin{equation}
+    \label{eq:7}
+    I(X;Y) = D(P_{XY} || P_{x}P_{Y}) = H_{c}(P_{XY}, P_{x}P_{Y}) - H(P_{XY})
+  \end{equation}
+  hence we have expressed $I(X;Y)$ in terms of the cross entropy $P_{XY},
+  P_{x}P_{Y}$ and the joint entropy $H(X,Y)$.
 \end{solution}
 
 
