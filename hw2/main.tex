@@ -3,7 +3,7 @@
 
 \begin{document}
 %%% fill in your team name and each student's name:
-\frontpage{Hadamard}{Leonardo Romor, Maurice Frank, Simone Astarita, XinYu Fu, Yije Zhang}{1}
+\frontpage{Hadamard}{Leonardo Romor, Maurice Frank, Simone Astarita, XinYu Fu, Yije Zhang}{2}
 \bigskip
 \noindent
 Unless otherwise stated, you should provide exact answers rather than rounded numbers (e.g., $\log 3$ instead of 1.585) for non-programming exercises.
@@ -50,7 +50,54 @@ Prove that for any two distributions $P$ and $Q$ over $\mathcal{X}$, $D(P||Q) \g
 \end{subproblem}
 
 \begin{solution}
-...
+  We begin by showing that $D(P||Q) \geq 0$.
+
+  \begin{proof}
+    By definition of relative entropy and by exploiting Jensen inequality
+    for the convex function $-\log(x)$ we have that:
+    \begin{equation}
+      \label{eq:2}
+      \begin{split}
+        D(P||Q) &= \mathbb{E}_{x \sim P}\left[-\log(\frac{Q(x)}{P(x)})\right] \\
+        & \geq -\log\left(\mathbb{E}_{x \sim
+            P}\left[\frac{Q(x)}{P(x)}\right]\right) \\
+        &= -log\left[\sum_{x}P(x) \frac{Q(x)}{P(x)}\right] = \log 1 = 0\\
+      \end{split}
+    \end{equation}
+    hence the thesis.
+  \end{proof}
+  For the second proof we use again the Jensen inequality and the statement
+  that the Jensen inequality becomes an equality if and only if all the elements
+  inside the convex function are equal.
+  \begin{proof}
+    By the axioms of probability, we
+    have that $\sum_{x \in \mathcal{X}} P(x) = 1$.
+    Without loss of generality, we can assume that we labeled each element of
+    $\mathcal{X}$ with an positive integer $i \in \mathbb{N}$.
+
+    The Jensen inequality becomes an equality if and only if the following condition holds:
+    \begin{equation}
+      \label{eq:3}
+      \frac{P(x_{1})}{Q(x_{1})} = \dots = \frac{P(x_{n})}{Q(x_{n})}
+    \end{equation}
+    Since \textit{relative entropy} $D(P||Q)$ is defined only if $Q(x) \ne 0$ if $P(x) \ne 0$. We can
+    then write for any $P(x_{i})$ and $P(x_{j})$:
+    \begin{equation}
+      \label{eq:4}
+      P(x_{j}) = \frac{P(x_{i})Q(x_j)}{Q(x_i)}
+    \end{equation}
+    but then we can write, $\forall x_{i}$:
+    \begin{equation}
+      \label{eq:5}
+      \begin{split}
+        \sum_{j}P(x_{j}) &= 1 \\
+        P(x_{i}) + \sum_{j \ne i}\frac{P(x_{i})Q(x_{j})}{Q(x_{i})} &= 1\\
+        P(x_{i}) + \frac{P(x_{i})}{Q(x_{i})}(1 - Q(x_{i})) &= 1 \\
+        P(x_{i}) = Q(x_{i})
+      \end{split}
+    \end{equation}
+    Hence $D(P||Q) = 0 \iff P(x) = Q(x), \forall x \in \mathcal{X}$.
+  \end{proof}
 \end{solution}
 
 \begin{subproblem}{1}
@@ -60,142 +107,13 @@ We have seen that the mutual information can be expressed in
 \end{subproblem}
 
 \begin{solution}
-...
-\end{solution}
-
-\begin{subproblem}{2}
-We have seen a relation between relative entropy and cross
-        entropy in Intro/Team Quiz 02. Use this relation to express
-        the mutual information $I(X;Y)$ in terms of Shannon entropies
-        of $X$ and $Y$ (such as $H(X), H(Y), H(X|Y), H(Y|X), H(YX)$) and of the cross entropy $H_c$ of $P_{XY}$ and $P_X
-        \cdot P_Y$.
-\end{subproblem}
-
-\begin{solution}
-...
-\end{solution}
-
-
-
-
-
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-
-\begin{nproblem}{8}{Programming}
-	\textbf{Note:} You do not have to hand in your code. As before, describe briefly what you did to reach your answer, what choices you made, and how you treated edge cases if those arose.
-\end{nproblem}
-
-\begin{subproblem}{1}
-In the \href{https://canvas.uva.nl/courses/10933/assignments/72716}{first programming quiz} for this module, you computed the entropy of sampling a single letter from the story of Jack and the beanstalk.
-
-If you instead decided to sample a single \emph{word} from the same story, do you expect the entropy to be higher or lower compared to sampling a single letter? Why?
-\end{subproblem}
-
-\begin{solution}
-...
-\end{solution}
-
-\begin{subproblem}{3}
-Verify your answer from (a) by writing a program that computes the entropy explicitly. Use \href{https://raw.githubusercontent.com/cschaffner/InformationTheory/master/2019/Text/Jack.txt}{the same text file} as input.
-\end{subproblem}
-
-\begin{solution}
-...
-\end{solution}
-
-\begin{subproblem}{1}
-In the \href{https://canvas.uva.nl/courses/10933/assignments/72715}{second programming quiz} for this module, you computed the entropy of the second letter given the first when sampling a pair of letters from the story of Jack and the beanstalk. Let $P_{XY}$ denote the joint distribution where $X$ is the first and $Y$ is the second letter (again negleticing the beginning and end of the text).
-
-Explain in words why $P_X = P_Y$.
-\end{subproblem}
-
-\begin{solution}
-...
-\end{solution}
-
-\begin{subproblem}{2}
-For $P_{XY}$ the bigram distribution from above, write a program to compute the cross entropy $H_C(P_{XY} , P_X \cdot P_Y)$ between the bigram distribution and the independent single-letter distribution.
-\end{subproblem}
-
-\begin{solution}
-...
-\end{solution}
-
-\begin{subproblem}{1}
-Express in words what this quantity  $H_C(P_{XY} , P_X \cdot P_Y)$ means.
-\end{subproblem}
-
-\begin{solution}
-...
-\end{solution}
-
-\end{document}
-\documentclass[a4paper,10pt]{article}
-\usepackage{solutions}
-
-\begin{document}
-%%% fill in your team name and each student's name:
-\frontpage{Your team name}{Your names}{2}
-\bigskip
-\noindent
-Unless otherwise stated, you should provide exact answers rather than rounded numbers (e.g., $\log 3$ instead of 1.585) for non-programming exercises.
-
-
-
-
-
-
-
-
-
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\begin{nproblem}{5}{Entropy of functions of a random variable}
-Let $X$ be a random variable, and let $f$ be a function of $X$.
-\end{nproblem}
-
-\begin{subproblem}{2}
-Show that $H(f(X) | X) = 0$.
-\end{subproblem}
-
-\begin{solution}
-...
-\end{solution}
-
-\begin{subproblem}{3}
-Show that $H(f(X)) \leq H(X)$. \\\textbf{Hint:} use the chain rule.
-\end{subproblem}
-
-\begin{solution}
-...
-\end{solution}
-
-
-
-\begin{nproblem}{8}{Relative and cross entropy}
-\end{nproblem}
-
-\begin{subproblem}{5}
-Prove that for any two distributions $P$ and $Q$ over $\mathcal{X}$, $D(P||Q) \geq 0$, and that equality holds if and only if $P = Q$.
-\end{subproblem}
-
-\begin{solution}
-...
-\end{solution}
-
-\begin{subproblem}{1}
-We have seen that the mutual information can be expressed in
-        terms of the relative entropy, i.e.\ that $I(X;Y) =
-        D(P_{XY}||P_X \cdot P_Y)$. Use (a) and this fact to show that $H(X|Y) \leq H(X)$.
-\end{subproblem}
-
-\begin{solution}
-...
+  \begin{proof}
+    By definition and since $D(P||Q)\ge 0$:
+    \begin{equation}
+      \label{eq:6}
+      H(X) = H(X|Y) + I(X;Y) = H(X|Y) + D(P_{XY}||P_{X}P_{Y}) \ge H(X|Y)
+    \end{equation}
+  \end{proof}
 \end{solution}
 
 \begin{subproblem}{2}
